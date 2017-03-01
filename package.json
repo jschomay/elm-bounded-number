@@ -1,0 +1,15 @@
+{
+  "name": "elm-bounded-number",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "lobo": "0.0.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "lobo --watch"
+  },
+  "author": "Jeff Schomay",
+  "license": "BSD3"
+}
