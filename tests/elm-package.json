@@ -5,8 +5,8 @@
     "license": "BSD-3-Clause",
     "source-directories": [
         ".",
-        "../src",
         "..",
+        "../src/",
         "../node_modules/lobo/runner",
         "../node_modules/lobo/plugin/elm-test-extra"
     ],

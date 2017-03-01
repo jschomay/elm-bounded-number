@@ -1,0 +1,55 @@
+[
+  {
+    "name": "Number.Bounded",
+    "comment": " A type representing bounded numbers.  Once a bound is set, the bounded value can never go out of this range.\n\n(Note that although this is intended for numbers, it works for any comparable.)\n\n\n    between 1 10\n        |> set 7\n        |> inc 5\n        |> value\n    -- (equals 10)\n\n\n@docs Bounded\n\n@docs between, set, inc, dec\n\n@docs value, minBound, maxBound\n\n",
+    "aliases": [],
+    "types": [
+      {
+        "name": "Bounded",
+        "comment": " ",
+        "args": [
+          "comparable"
+        ],
+        "cases": []
+      }
+    ],
+    "values": [
+      {
+        "name": "between",
+        "comment": " Initialize a bounded number by giving it a min and max for the bounds (inclusive).  The value will be initialized as the provided min.  The min will always be the lower number, regardless of which order you provide the arguments.\n",
+        "type": "comparable -> comparable -> Number.Bounded.Bounded comparable"
+      },
+      {
+        "name": "dec",
+        "comment": " Decrements the value by the given amount, \"clipping\" at the min bound if it passes it.\n",
+        "type": "comparable -> Number.Bounded.Bounded comparable -> Number.Bounded.Bounded comparable"
+      },
+      {
+        "name": "inc",
+        "comment": " Increments the value by the given amount, \"clipping\" at the max bound if it passes it.\n",
+        "type": "comparable -> Number.Bounded.Bounded comparable -> Number.Bounded.Bounded comparable"
+      },
+      {
+        "name": "maxBound",
+        "comment": " Get the max bound\n",
+        "type": "Number.Bounded.Bounded comparable -> comparable"
+      },
+      {
+        "name": "minBound",
+        "comment": " Get the min bound\n",
+        "type": "Number.Bounded.Bounded comparable -> comparable"
+      },
+      {
+        "name": "set",
+        "comment": " Set the value manually.  If you try to set a value greater than the max bound, it will \"clip\" at the max.  Likewise, if you try to set a value less than the min bound, it will clip at the min.\n",
+        "type": "comparable -> Number.Bounded.Bounded comparable -> Number.Bounded.Bounded comparable"
+      },
+      {
+        "name": "value",
+        "comment": " Get the value\n",
+        "type": "Number.Bounded.Bounded comparable -> comparable"
+      }
+    ],
+    "generated-with-elm-version": "0.18.0"
+  }
+]
