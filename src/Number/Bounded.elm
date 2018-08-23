@@ -1,26 +1,16 @@
-module Number.Bounded
-    exposing
-        ( Bounded
-        , between
-        , set
-        , inc
-        , dec
-        , minBound
-        , maxBound
-        , value
-        )
+module Number.Bounded exposing
+    ( Bounded
+    , between, set, inc, dec
+    , value, minBound, maxBound
+    )
 
-{-| A type representing bounded numbers.  Once a bound is set, the bounded value can never go out of this range.
-
-(Note that although this is intended for numbers, it works for any comparable.)
-
+{-| A type representing bounded numbers. Once a bound is set, the bounded value can never go out of this range.
 
     between 1 10
         |> set 7
         |> inc 5
         |> value
     -- (equals 10)
-
 
 @docs Bounded
 
@@ -32,57 +22,58 @@ module Number.Bounded
 
 
 {-| -}
-type Bounded comparable
-    = Bounded { min : comparable, max : comparable, value : comparable }
+type Bounded number
+    = Bounded { min : number, max : number, n : number }
 
 
-{-| Initialize a bounded number by giving it a min and max for the bounds (inclusive).  The value will be initialized as the provided min.  The min will always be the lower number, regardless of which order you provide the arguments.
+{-| Initialize a bounded number by giving it a min and max for the bounds (inclusive). The value will be initialized as the provided min. The min will always be the lower number, regardless of which order you provide the arguments.
 -}
-between : comparable -> comparable -> Bounded comparable
+between : number -> number -> Bounded number
 between a b =
     if a < b then
-        Bounded { min = a, max = b, value = a }
+        Bounded { min = a, max = b, n = a }
+
     else
-        Bounded { min = b, max = a, value = b }
+        Bounded { min = b, max = a, n = b }
 
 
-{-| Set the value manually.  If you try to set a value greater than the max bound, it will "clip" at the max.  Likewise, if you try to set a value less than the min bound, it will clip at the min.
+{-| Set the value manually. If you try to set a value greater than the max bound, it will "clip" at the max. Likewise, if you try to set a value less than the min bound, it will clip at the min.
 -}
-set : comparable -> Bounded comparable -> Bounded comparable
-set value (Bounded { min, max }) =
-    Bounded { min = min, max = max, value = Basics.max min <| Basics.min max value }
+set : number -> Bounded number -> Bounded number
+set n (Bounded { min, max }) =
+    Bounded { min = min, max = max, n = Basics.max min <| Basics.min max n }
 
 
 {-| Increments the value by the given amount, "clipping" at the max bound if it passes it.
 -}
-inc : comparable -> Bounded comparable -> Bounded comparable
-inc by (Bounded { min, max, value }) =
-    Bounded { min = min, max = max, value = Basics.min max <| value + by }
+inc : number -> Bounded number -> Bounded number
+inc by (Bounded { min, max, n }) =
+    Bounded { min = min, max = max, n = Basics.min max <| n + by }
 
 
 {-| Decrements the value by the given amount, "clipping" at the min bound if it passes it.
 -}
-dec : comparable -> Bounded comparable -> Bounded comparable
-dec by (Bounded { min, max, value }) =
-    Bounded { min = min, max = max, value = Basics.max min <| value - by }
+dec : number -> Bounded number -> Bounded number
+dec by (Bounded { min, max, n }) =
+    Bounded { min = min, max = max, n = Basics.max min <| n - by }
 
 
 {-| Get the value
 -}
-value : Bounded comparable -> comparable
-value (Bounded { value }) =
-    value
+value : Bounded number -> number
+value (Bounded { n }) =
+    n
 
 
 {-| Get the min bound
 -}
-minBound : Bounded comparable -> comparable
+minBound : Bounded number -> number
 minBound (Bounded { min }) =
     min
 
 
 {-| Get the max bound
 -}
-maxBound : Bounded comparable -> comparable
+maxBound : Bounded number -> number
 maxBound (Bounded { max }) =
     max

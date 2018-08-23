@@ -1,9 +1,9 @@
 module Tests exposing (all)
 
-import Number.Bounded exposing (..)
-import ElmTest.Extra exposing (..)
 import Expect
-import Fuzz exposing (list, int, tuple, string)
+import Fuzz exposing (int, list, string, tuple)
+import Number.Bounded exposing (..)
+import Test exposing (..)
 
 
 all : Test
