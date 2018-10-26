@@ -2,6 +2,7 @@ module Number.Bounded exposing
     ( Bounded
     , between, set, inc, dec
     , value, minBound, maxBound
+    , map
     )
 
 {-| A type representing bounded numbers. Once a bound is set, the bounded value can never go out of this range.
@@ -56,6 +57,20 @@ inc by (Bounded { min, max, n }) =
 dec : number -> Bounded number -> Bounded number
 dec by (Bounded { min, max, n }) =
     Bounded { min = min, max = max, n = Basics.max min <| n - by }
+
+
+{-| Transforms a Bounded value with a given function. If the value returned by the given function is greater than the max bound, it will "clip" at the max. Likewise, if the value returned by the given function is less than the min bound, it will clip at the min.
+
+    between 1 10
+        |> set 9
+        |> map sqrt
+        |> value
+    -- (equals 3)
+
+-}
+map : (number -> number) -> Bounded number -> Bounded number
+map mapFn bounded =
+    set (mapFn (value bounded)) bounded
 
 
 {-| Get the value

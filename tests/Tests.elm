@@ -41,4 +41,14 @@ all =
                 \by ->
                     Expect.true "broke the lower bound!" <| (value <| dec by <| between 1 10) >= 1
             ]
+        , describe "map"
+            [ test "maps a value given a map function" <|
+                \_ -> Expect.equal (value <| map sqrt <| set 9 <| between 1 10) 3
+            , fuzz int "the value will never decrement past than the min bound" <|
+                \by ->
+                    Expect.true "broke the lower bound!" <| (value <| map ((+) by) <| between 1 10) >= 1
+            , fuzz int "the value will never increment past than the max bound" <|
+                \by ->
+                    Expect.true "broke the upper bound!" <| (value <| map ((+) by) <| between 1 10) >= 1
+            ]
         ]
