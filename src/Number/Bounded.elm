@@ -19,6 +19,8 @@ module Number.Bounded exposing
 
 @docs value, minBound, maxBound
 
+@docs map
+
 -}
 
 
