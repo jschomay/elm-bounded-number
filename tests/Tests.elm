@@ -30,16 +30,20 @@ all =
         , describe "inc"
             [ test "increments the value by the given amount" <|
                 \_ -> Expect.equal (value <| inc 2 <| set 3 <| between 1 10) 5
-            , fuzz int "the value will never increment past than the max bound" <|
+            , fuzz int "the value will never increment past the max bound" <|
                 \by ->
                     Expect.true "broke the upper bound!" <| (value <| inc by <| between 1 10) <= 10
+            , test "incrementing by a negative number doesn't break the lower bound" <|
+                \_ -> Expect.true "broke the lower bound!" <| (value <| inc -10 <| set 5 <| between 1 10) >= 1
             ]
         , describe "dec"
             [ test "decrements the value by the given amount" <|
                 \_ -> Expect.equal (value <| dec 2 <| set 5 <| between 1 10) 3
-            , fuzz int "the value will never decrement past than the min bound" <|
+            , fuzz int "the value will never decrement past the min bound" <|
                 \by ->
                     Expect.true "broke the lower bound!" <| (value <| dec by <| between 1 10) >= 1
+            , test "decrementing by a negative number doesn't break the upper bound" <|
+                \_ -> Expect.true "broke the upper bound!" <| (value <| dec -10 <| set 5 <| between 1 10) <= 10
             ]
         , describe "map"
             [ test "maps a value given a map function" <|
