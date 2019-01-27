@@ -44,21 +44,21 @@ between a b =
 -}
 set : number -> Bounded number -> Bounded number
 set n (Bounded { min, max }) =
-    Bounded { min = min, max = max, n = Basics.max min <| Basics.min max n }
+    Bounded { min = min, max = max, n = Basics.clamp min max n }
 
 
 {-| Increments the value by the given amount, "clipping" at the max bound if it passes it.
 -}
 inc : number -> Bounded number -> Bounded number
 inc by (Bounded { min, max, n }) =
-    Bounded { min = min, max = max, n = Basics.min max <| n + by }
+    Bounded { min = min, max = max, n = Basics.clamp min max <| n + by }
 
 
 {-| Decrements the value by the given amount, "clipping" at the min bound if it passes it.
 -}
 dec : number -> Bounded number -> Bounded number
 dec by (Bounded { min, max, n }) =
-    Bounded { min = min, max = max, n = Basics.max min <| n - by }
+    Bounded { min = min, max = max, n = Basics.clamp min max <| n - by }
 
 
 {-| Transforms a Bounded value with a given function. If the value returned by the given function is greater than the max bound, it will "clip" at the max. Likewise, if the value returned by the given function is less than the min bound, it will clip at the min.
